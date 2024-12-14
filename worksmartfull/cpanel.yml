@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/mitg9525/public_html/worksmartfull.mitrajamur.com/
+    - /bin/cp index.html $DEPLOYPATH
