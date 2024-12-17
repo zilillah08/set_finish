@@ -4,7 +4,6 @@ checkAuth();
 $monthlyParticipants = getMonthlyParticipants();
 $role = $_SESSION['role'];
 $workshops = getWorkshopsWithMitra(); // Using the enhanced function
-$actualEarnings = getTotalPenghasilanByMitraId($_SESSION['user_id']);
 
 ?>
 <!DOCTYPE html>
@@ -293,18 +292,29 @@ $actualEarnings = getTotalPenghasilanByMitraId($_SESSION['user_id']);
                         <!-- Rating Section -->
                         <div class="rating-wrapper mb-3">
                           <div class="stars">
-                              <?php
-                              $rating = round($workshop['average_rating']);
-                              for ($i = 1; $i <= 5; $i++) {
-                                  echo $i <= $rating ? 
-                                      '<i class="bi bi-star-fill text-warning"></i>' : 
-                                      '<i class="bi bi-star text-muted"></i>';
-                              }
-                              ?>
-                              <span class="ms-2 text-muted">
-                                  <?= number_format($workshop['average_rating'], 1) ?> 
-                                  (<?= $workshop['total_reviews'] ?> ulasan)
-                              </span>
+                          <?php
+                          // Validasi nilai average_rating sebelum menggunakan round()
+                          $rating = isset($workshop['average_rating']) && is_numeric($workshop['average_rating']) 
+                              ? round($workshop['average_rating']) 
+                              : 0;
+
+                          // Loop untuk menampilkan ikon bintang
+                          for ($i = 1; $i <= 5; $i++) {
+                              echo $i <= $rating ? 
+                                  '<i class="bi bi-star-fill text-warning"></i>' : 
+                                  '<i class="bi bi-star text-muted"></i>';
+                          }
+                          ?>
+
+                          <span class="ms-2 text-muted">
+                              <?= isset($workshop['average_rating']) && is_numeric($workshop['average_rating']) 
+                                  ? number_format($workshop['average_rating'], 1) 
+                                  : '0.0' ?> 
+                              (<?= isset($workshop['total_reviews']) && is_numeric($workshop['total_reviews']) 
+                                  ? $workshop['total_reviews'] 
+                                  : '0' ?> ulasan)
+                          </span>
+
                           </div>
                         </div>
 
@@ -341,7 +351,7 @@ $actualEarnings = getTotalPenghasilanByMitraId($_SESSION['user_id']);
                     <div class="col-xxl-4 col-md-4">
                         <div class="card info-card sales-card">
                             <div class="card-body">
-                                <h5 class="card-title brand-color">Hasil Pendaftaran</h5>
+                                <h5 class="card-title brand-color">Total Pemasukan</h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-currency-dollar"></i>
@@ -382,23 +392,6 @@ $actualEarnings = getTotalPenghasilanByMitraId($_SESSION['user_id']);
                                     </div>
                                     <div class="ps-3">
                                         <h6><?= countMitraWorkshops($_SESSION['user_id']) ?></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Earnings Actual Card -->
-                    <div class="col-xxl-12 col-md-12">
-                        <div class="card info-card sales-card">
-                            <div class="card-body">
-                                <h5 class="card-title brand-color">Total Penghasilan</h5>
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-currency-dollar"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>Rp <?= number_format($actualEarnings, 0, ',', '.') ?></h6>
                                     </div>
                                 </div>
                             </div>
@@ -447,7 +440,7 @@ $actualEarnings = getTotalPenghasilanByMitraId($_SESSION['user_id']);
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer brand-bg-color">
     <div class="copyright text-light">
-      &copy; Copyright <strong><span>WorkSmart</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>WorkSmart</span></strong>. 
     </div>
   </footer><!-- End Footer -->
 
@@ -512,35 +505,36 @@ function initDashboardCharts() {
 
     // Admin/General participants chart
     const participantsChart = document.querySelector('#barChart_peserta');
-    if (participantsChart) {
-        new Chart(participantsChart, {
-            ...baseChartConfig,
-            data: {
-                labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-                datasets: [{
-                    label: 'Peserta Terdaftar',
-                    data: <?= json_encode($monthlyParticipants ?? []); ?>,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)', 'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)', 'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)',
-                        'rgba(201, 203, 207, 0.2)', 'rgba(100, 100, 100, 0.2)',
-                        'rgba(170, 128, 128, 0.2)', 'rgba(200, 130, 150, 0.2)',
-                        'rgba(130, 180, 160, 0.2)', 'rgba(150, 130, 200, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgb(255, 99, 132)', 'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)', 'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)', 'rgb(153, 102, 255)',
-                        'rgb(201, 203, 207)', 'rgb(100, 100, 100)',
-                        'rgb(170, 128, 128)', 'rgb(200, 130, 150)',
-                        'rgb(130, 180, 160)', 'rgb(150, 130, 200)'
-                    ],
-                    borderWidth: 1
-                }]
-            }
-        });
-    }
+if (participantsChart) {
+    new Chart(participantsChart, {
+        ...baseChartConfig,
+        data: {
+            labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+            datasets: [{
+                label: 'Peserta Terdaftar',
+                data: <?= json_encode($normalizedParticipants ?? []); ?>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)', 'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)', 'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)', 'rgba(100, 100, 100, 0.2)',
+                    'rgba(170, 128, 128, 0.2)', 'rgba(200, 130, 150, 0.2)',
+                    'rgba(130, 180, 160, 0.2)', 'rgba(150, 130, 200, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)', 'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)', 'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)', 'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)', 'rgb(100, 100, 100)',
+                    'rgb(170, 128, 128)', 'rgb(200, 130, 150)',
+                    'rgb(130, 180, 160)', 'rgb(150, 130, 200)'
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
+}
+
 
     // Mitra participants chart
     const mitraChart = document.querySelector('#mitraParticipantsChart');

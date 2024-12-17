@@ -1,6 +1,7 @@
+
 <?php 
-require_once '../controllers/function.php';
-$workshops = getWorkshopsWithMitra();
+require_once '../controllers/function.php'; //memanggil fungsi function.php yang didalamnya sudah ada fungsi tertentu
+$workshops = getWorkshopsWithMitra(); //
 $isLogin = checkUserSession();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -83,7 +84,7 @@ ini_set('display_errors', 1);
           <li><a href="#about">Tentang</a></li>
           <li><a href="#workshops">Workshop</a></li>
           <?php if($isLogin) { $role = $_SESSION['role']; ?>
-          <li class="dropdown"><a href="#"><span>Akun</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown"><a href=" "><span>Akun</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="dashboard.php">Profil Saya</a></li>
               <?php if($role != 'admin' && $role != 'mitra') { ?>
@@ -140,8 +141,9 @@ ini_set('display_errors', 1);
 
               <div class="hero-buttons">
                 <a href="#workshops" class="btn btn-primary me-0 me-sm-2 mx-1">Jelajahi Workshop</a>
-                <!-- <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="btn btn-link mt-2 mt-sm-0 glightbox">
-                  <i class="bi bi-play-circle me-1"></i>
+                
+                <!-- link vidio cara kerja <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="btn btn-link mt-2 mt-sm-0 glightbox"> -->
+                 <!-- <i class="bi bi-play-circle me-1"></i>
                   Lihat Cara Kerjanya -->
                 </a>
               </div>
@@ -150,32 +152,20 @@ ini_set('display_errors', 1);
 
           <div class="col-lg-6">
             <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
-              <img src="landingpage/assets/img/illustration-1.webp" alt="Ilustrasi Workshop Online" class="img-fluid">
-
-              <!-- <div class="customers-badge">
-                <div class="customer-avatars">
-                  <img src="landingpage/assets/img/avatar-1.webp" alt="Peserta Workshop 1" class="avatar">
-                  <img src="landingpage/assets/img/avatar-2.webp" alt="Peserta Workshop 2" class="avatar">
-                  <img src="landingpage/assets/img/avatar-3.webp" alt="Peserta Workshop 3" class="avatar">
-                  <img src="landingpage/assets/img/avatar-4.webp" alt="Peserta Workshop 4" class="avatar">
-                  <img src="landingpage/assets/img/avatar-5.webp" alt="Peserta Workshop 5" class="avatar">
-                  <span class="avatar more">5K+</span>
-                </div>
-                <p class="mb-0 mt-2">Lebih dari 5.000 profesional telah bergabung dengan komunitas pembelajaran kami</p>
-              </div>
+              <img src="landingpage/assets/img/illustration-1.webp" alt="Ilustrasi Workshop Online" class="img-fluid">          
             </div>
           </div>
-        </div> -->
-
-        <!-- <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
+        </div>
+<!--
+        <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
           <div class="col-lg-3 col-md-6">
             <div class="stat-item">
               <div class="stat-icon">
                 <i class="bi bi-mortarboard"></i>
               </div>
               <div class="stat-content">
-                <h4>500+ Workshop</h4>
-                <p class="mb-0">Sesi Dipimpin Ahli</p>
+                <h4>500+ peserta</h4>
+                <p class="mb-0">peserta sudah dilatih</p>
               </div>
             </div>
           </div>
@@ -185,7 +175,7 @@ ini_set('display_errors', 1);
                 <i class="bi bi-people"></i>
               </div>
               <div class="stat-content">
-                <h4>200+ Pelatih</h4>
+                <h4>25 Pelatih</h4>
                 <p class="mb-0">Ahli Industri</p>
               </div>
             </div>
@@ -252,7 +242,7 @@ ini_set('display_errors', 1);
               <div class="row gy-4">
                 <div class="col-lg-5">
                   <div class="profile d-flex align-items-center gap-3">
-                    <img src="landingpage/assets/img/team1.jpg" alt="Profil CEO" class="profile-image">
+                    <img src="landingpage/assets/img/anggota.jpg" alt="Profil CEO" class="profile-image">
                     <div>
                       <h4 class="profile-name">Anggota</h4>
                       <p class="profile-position">Pendiri WorkSmart</p>
@@ -264,9 +254,7 @@ ini_set('display_errors', 1);
                     <i class="bi bi-telephone-fill"></i>
                     <div>
                       <p class="contact-label">Informasi Workshop</p>
-                      <p class="contact-number">
-                        <a href="mailto:worksmart@gmail.com">worksmart@gmail.com</a>
-                    </p>
+                      <p class="contact-number">+62 8560 7601 828</p>
                     </div>
                   </div>
                 </div>
@@ -281,7 +269,7 @@ ini_set('display_errors', 1);
                 <img src="landingpage/assets/img/about-2.webp" alt="Diskusi Grup" class="img-fluid small-image rounded-4">
               </div>
               <!-- <div class="experience-badge floating">
-                <h3>5+ <span>Tahun</span></h3>
+                <p>Diciptakan <span>Untuk</span></p>
                 <p>Menghadirkan workshop berkualitas</p>
               </div> -->
             </div>
@@ -360,20 +348,31 @@ ini_set('display_errors', 1);
                     <!-- Add this rating section after card-image-wrapper -->
                     <div class="rating-wrapper mt-2 mb-2 d-flex align-items-center justify-content-between">
                         <div class="rating-stars">
-                            <?php
-                            $rating = round($workshop['average_rating']);
-                            for ($i = 1; $i <= 5; $i++) {
-                                if ($i <= $rating) {
-                                    echo '<i class="bi bi-star-fill text-warning"></i>';
-                                } else {
-                                    echo '<i class="bi bi-star text-muted"></i>';
-                                }
-                            }
-                            ?>
-                            <span class="ms-2 text-muted">
-                                <?= number_format($workshop['average_rating'], 1) ?> 
-                                (<?= $workshop['total_reviews'] ?> ulasan)
-                            </span>
+                        <?php
+                          // Validasi nilai average_rating sebelum menggunakan round()
+                          $rating = isset($workshop['average_rating']) && is_numeric($workshop['average_rating']) 
+                              ? round($workshop['average_rating']) 
+                              : 0;
+
+                          // Loop untuk menampilkan ikon bintang
+                          for ($i = 1; $i <= 5; $i++) {
+                              if ($i <= $rating) {
+                                  echo '<i class="bi bi-star-fill text-warning"></i>';
+                              } else {
+                                  echo '<i class="bi bi-star text-muted"></i>';
+                              }
+                          }
+                          ?>
+
+                           <span class="ms-2 text-muted">
+                            <?= isset($workshop['average_rating']) && is_numeric($workshop['average_rating']) 
+                                ? number_format($workshop['average_rating'], 1) 
+                                : '0.0' ?> 
+                            (<?= isset($workshop['total_reviews']) && is_numeric($workshop['total_reviews']) 
+                                ? $workshop['total_reviews'] 
+                                : '0' ?> ulasan)
+                        </span>
+
                         </div>
                         <span class="participants-count">
                             <i class="bi bi-people-fill text-primary"></i> 
@@ -531,21 +530,35 @@ ini_set('display_errors', 1);
                     
                     <div class="rating-summary bg-light p-4 rounded-4 mb-4">
                       <div class="row align-items-center">
-                        <div class="col-md-6 text-center">
-                          <h2 class="display-4 fw-bold text-primary"><?= number_format($workshop['average_rating'], 1) ?></h2>
-                          <p class="text-muted mb-2">dari 5.0</p>
-                          <div class="stars">
-                            <?php
-                            $rating = round($workshop['average_rating']);
-                            for ($i = 1; $i <= 5; $i++) {
-                              echo $i <= $rating ? 
-                                '<i class="bi bi-star-fill text-warning fs-4"></i>' : 
-                                '<i class="bi bi-star text-muted fs-4"></i>';
-                            }
-                            ?>
-                          </div>
-                          <p class="mt-2 text-muted"><?= $workshop['total_reviews'] ?> ulasan</p>
-                        </div>
+                      <div class="col-md-6 text-center">
+                      <h2 class="display-4 fw-bold text-primary">
+                          <?= isset($workshop['average_rating']) && is_numeric($workshop['average_rating']) 
+                              ? number_format($workshop['average_rating'], 1) 
+                              : '0.0' ?>
+                      </h2>
+                      <p class="text-muted mb-2">dari 5.0</p>
+                      <div class="stars">
+                          <?php
+                          // Validasi nilai average_rating sebelum menggunakan round()
+                          $rating = isset($workshop['average_rating']) && is_numeric($workshop['average_rating']) 
+                              ? round($workshop['average_rating']) 
+                              : 0;
+
+                          // Loop untuk menampilkan ikon bintang
+                          for ($i = 1; $i <= 5; $i++) {
+                              echo $i <= $rating 
+                                  ? '<i class="bi bi-star-fill text-warning fs-4"></i>' 
+                                  : '<i class="bi bi-star text-muted fs-4"></i>';
+                          }
+                          ?>
+    </div>
+    <p class="mt-2 text-muted">
+        <?= isset($workshop['total_reviews']) && is_numeric($workshop['total_reviews']) 
+            ? $workshop['total_reviews'] 
+            : '0' ?> ulasan
+    </p>
+</div>
+
                       </div>
                     </div>
 
@@ -624,20 +637,20 @@ ini_set('display_errors', 1);
 
 
     <!-- Testimonials Section -->
-    <!-- <section id="testimonials" class="testimonials section light-background"> -->
+     <!--<section id="testimonials" class="testimonials section light-background">
 
-      <!-- Section Title -->
+       Section Title -->
       <!-- <div class="container section-title" data-aos="fade-up">
         <h2>Testimoni</h2>
         <p>Dengarkan apa yang dikatakan peserta workshop tentang pengalaman belajar mereka dengan WorkSmart</p>
-      </div> -->
-      <!-- End Section Title -->
+      </div>
+       End Section Title -->
 
       <div class="container">
 
         <div class="row g-5">
 
-          <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <!--<div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
             <div class="testimonial-item">
               <img src="landingpage/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
               <h3>John Anderson</h3>
@@ -651,8 +664,7 @@ ini_set('display_errors', 1);
                 <i class="bi bi-quote quote-icon-right"></i>
               </p>
             </div>
-          </div> -->
-          <!-- End testimonial item -->
+          </div> end testimonial item -->
 
           <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
             <div class="testimonial-item">
@@ -667,11 +679,10 @@ ini_set('display_errors', 1);
                 <span>Workshop UI/UX Design adalah yang saya butuhkan untuk memajukan karir saya. Instrukturnya berpengetahuan luas dan proyek praktik membantu saya membangun portofolio yang kuat. Sangat sepadan!</span>
                 <i class="bi bi-quote quote-icon-right"></i>
               </p>
-            </div> -->
-          <!-- </div> -->
-          <!-- End testimonial item -->
+            </div>
+          </div> End testimonial item -->
 
-          <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+           <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
             <div class="testimonial-item">
               <img src="landingpage/assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
               <h3>Michael Roberts</h3>
@@ -685,10 +696,9 @@ ini_set('display_errors', 1);
                 <i class="bi bi-quote quote-icon-right"></i>
               </p>
             </div>
-          </div> -->
-          <!-- End testimonial item -->
+          </div> End testimonial item -->
 
-          <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+         <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
             <div class="testimonial-item">
               <img src="landingpage/assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
               <h3>Sarah Thompson</h3>
@@ -702,54 +712,49 @@ ini_set('display_errors', 1);
                 <i class="bi bi-quote quote-icon-right"></i>
               </p>
             </div>
-          </div>
-           -->
+          </div> End testimonial item --> 
 
-        </div>
+        </div> 
 
-      </div>
+      </div> 
 
     </section>
     <!-- /Testimonials Section -->
 
     <!-- Bagian Statistik -->
-    <!-- <section id="stats" class="stats section">
+     <!--<section id="stats" class="stats section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row gy-4">
 
-          <div class="col-lg-3 col-md-6">
+           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="5000" data-purecounter-duration="1" class="purecounter"></span>
               <p>Peserta Dilatih</p>
             </div>
-          </div> -->
-          <!-- End Stats Item -->
+                  </div> End Stats Item -->
 
-          <!-- <div class="col-lg-3 col-md-6">
+           <!--<div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="50" data-purecounter-duration="1" class="purecounter"></span>
               <p>Workshop Tersedia</p>
             </div>
-          </div> -->
-          <!-- End Stats Item -->
+          </div> End Stats Item -->
 
-          <!-- <div class="col-lg-3 col-md-6">
+           <!--<div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="2000" data-purecounter-duration="1" class="purecounter"></span>
               <p>Jam Pelatihan</p>
             </div>
-          </div> -->
-          <!-- End Stats Item -->
+          </div> End Stats Item -->
 
-          <!-- <div class="col-lg-3 col-md-6">
+         <!--  <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="1" class="purecounter"></span>
               <p>Instruktur Ahli</p>
             </div>
-          </div> -->
-          <!-- End Stats Item -->
+          </div> End Stats Item -->
 
         </div>
 
@@ -772,9 +777,9 @@ ini_set('display_errors', 1);
                 <path d="M198.804 194.488C189.279 189.596 179.529 185.52 169.407 182.07L169.384 182.049C169.227 181.994 169.07 181.939 168.912 181.884C166.669 181.139 165.906 184.546 167.669 185.615C174.053 189.473 182.761 191.837 189.146 195.695C156.603 195.912 119.781 196.591 91.266 179.049C62.5221 161.368 48.1094 130.695 56.934 98.891C84.5539 98.7247 112.556 84.0176 129.508 62.667C136.396 53.9724 146.193 35.1448 129.773 30.2717C114.292 25.6624 93.7109 41.8875 83.1971 51.3147C70.1109 63.039 59.63 78.433 54.2039 95.0087C52.1221 94.9842 50.0776 94.8683 48.0703 94.6608C30.1803 92.8027 11.2197 83.6338 5.44902 65.1074C-1.88449 41.5699 14.4994 19.0183 27.9202 1.56641C28.6411 0.625793 27.2862 -0.561638 26.5419 0.358501C13.4588 16.4098 -0.221091 34.5242 0.896608 56.5659C1.8218 74.6941 14.221 87.9401 30.4121 94.2058C37.7076 97.0203 45.3454 98.5003 53.0334 98.8449C47.8679 117.532 49.2961 137.487 60.7729 155.283C87.7615 197.081 139.616 201.147 184.786 201.155L174.332 206.827C172.119 208.033 174.345 211.287 176.537 210.105C182.06 207.125 187.582 204.122 193.084 201.144C193.346 201.147 195.161 199.887 195.423 199.868C197.08 198.548 193.084 201.144 195.528 199.81C196.688 199.192 197.846 198.552 199.006 197.935C200.397 197.167 200.007 195.087 198.804 194.488ZM60.8213 88.0427C67.6894 72.648 78.8538 59.1566 92.1207 49.0388C98.8475 43.9065 106.334 39.2953 114.188 36.1439C117.295 34.8947 120.798 33.6609 124.168 33.635C134.365 33.5511 136.354 42.9911 132.638 51.031C120.47 77.4222 86.8639 93.9837 58.0983 94.9666C58.8971 92.6666 59.783 90.3603 60.8213 88.0427Z" fill="currentColor"></path>
               </svg>
             </div>
-          </div> -->
+          </div>
 
-          <!-- <div class="col-lg-7" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-lg-7" data-aos="fade-up" data-aos-delay="300">
             <div class="faq-container">
 
               <div class="faq-item faq-active">
@@ -783,8 +788,7 @@ ini_set('display_errors', 1);
                   <p>Pendaftaran sangat mudah! Telusuri workshop yang tersedia, pilih kursus yang Anda inginkan, dan klik tombol "Daftar". Anda dapat melakukan pembayaran secara online dengan aman dan menerima konfirmasi pendaftaran segera.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div> -->
-              <!-- End Faq item-->
+              </div> - End Faq item-->
 
               <!-- <div class="faq-item">
                 <h3>Metode pembayaran apa yang diterima?</h3>
@@ -792,35 +796,31 @@ ini_set('display_errors', 1);
                   <p>Kami menerima berbagai metode pembayaran termasuk kartu kredit/debit, transfer bank, dan dompet digital. Semua pembayaran diproses secara aman melalui mitra gateway pembayaran terpercaya kami.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div> -->
-              <!-- End Faq item-->
+              </div> End Faq item-->
 
-              <!-- <div class="faq-item">
+               <!--<div class="faq-item">
                 <h3>Apakah workshop dilakukan secara online atau tatap muka?</h3>
                 <div class="faq-content">
                   <p>Kami menawarkan workshop online dan tatap muka. Setiap daftar workshop menunjukkan format dengan jelas. Workshop online dilakukan melalui platform pembelajaran interaktif kami, sementara sesi tatap muka diadakan di pusat pelatihan yang ditentukan.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div> -->
-              <!-- End Faq item-->
+              </div> End Faq item-->
 
-              <!-- <div class="faq-item">
+               <!--<div class="faq-item">
                 <h3>Apa yang terjadi jika saya melewatkan sesi workshop?</h3>
                 <div class="faq-content">
                   <p>Untuk workshop online, rekaman tersedia bagi peserta yang terdaftar. Untuk sesi tatap muka, kami menawarkan kelas pengganti jika memungkinkan. Silakan hubungi tim dukungan kami untuk pengaturan khusus.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div> -->
-              <!-- End Faq item-->
+              </div> End Faq item-->
 
-              <!-- <div class="faq-item">
+               <!--<div class="faq-item">
                 <h3>Apakah Anda memberikan sertifikat setelah selesai?</h3>
                 <div class="faq-content">
                   <p>Ya, semua peserta menerima sertifikat digital setelah berhasil menyelesaikan workshop. Sertifikat ini dapat diunduh langsung dari dashboard akun Anda.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div> -->
-              <!-- End Faq item-->
+              </div> End Faq item-->
 
               <!-- <div class="faq-item">
                 <h3>Bagaimana kebijakan pengembalian dana Anda?</h3>
@@ -828,8 +828,7 @@ ini_set('display_errors', 1);
                   <p>Kami menawarkan pengembalian dana penuh jika pembatalan dilakukan 7 hari sebelum tanggal mulai workshop. Pengembalian dana sebagian tersedia hingga 48 jam sebelum workshop. Silakan tinjau kebijakan pengembalian dana lengkap kami untuk detail lebih lanjut.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div> -->
-              <!-- End Faq item-->
+              </div> End Faq item-->
 
             </div>
           </div>
@@ -843,7 +842,7 @@ ini_set('display_errors', 1);
 
   <footer id="footer" class="footer">
 
-  <div class="container footer-top">
+    <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
@@ -853,9 +852,7 @@ ini_set('display_errors', 1);
             <p>Jl. Mastrip, krajan Timur, Sumbersari,</p>
             <p>Kec.Sumbersari, Kab.Jember Jawa Timur 68121</p>
             <p class="mt-3"><strong>Telepon:</strong> <span>+62 856 0760 1828</span></p>
-            <p class="contact-number">
-              <a href="mailto:worksmart@gmail.com">worksmart@gmail.com</a>
-          </p>
+            <p><strong>Email:</strong> <span>worksmartwmk@gmail.com</span></p>
           </div>
           <div class="social-links d-flex mt-4">
             <a href="https://www.instagram.com/worksmart.wmk?igsh=amNkY3NwcWd5OG5l"><i class="bi bi-instagram"></i></a>
@@ -870,6 +867,9 @@ ini_set('display_errors', 1);
             <li><a href="#workshops">Workshop</a></li>
           </ul>
         </div>
+
+       
+       
 
       </div>
     </div>
@@ -899,90 +899,71 @@ ini_set('display_errors', 1);
   <!-- Main JS File -->
   <script src="landingpage/assets/js/main.js"></script>
   <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const workshopCards = document.querySelectorAll('.workshop-card');
-  const searchInput = document.getElementById('workshopSearch');
-  const filterButtons = document.querySelectorAll('.filter-buttons .btn');
+    document.addEventListener('DOMContentLoaded', function() {
+      const workshopCards = document.querySelectorAll('.workshop-card');
+      const searchInput = document.getElementById('workshopSearch');
+      const filterButtons = document.querySelectorAll('.filter-buttons .btn');
 
-  // Live Search Function
-  searchInput.addEventListener('input', function() {
-      const searchTerm = this.value.toLowerCase();
-      
-      workshopCards.forEach(card => {
-          const title = card.querySelector('.card-title').textContent.toLowerCase();
-          const description = card.querySelector('.card-text').textContent.toLowerCase();
-          const location = card.querySelector('.info-item:nth-child(2)').textContent.toLowerCase();
+      // Live Search Function
+      searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
           
-          const matches = title.includes(searchTerm) || 
-                        description.includes(searchTerm) || 
-                        location.includes(searchTerm);
-          
-          card.closest('.col-lg-4').style.display = matches ? 'block' : 'none';
+          workshopCards.forEach(card => {
+              const title = card.querySelector('.card-title').textContent.toLowerCase();
+              const description = card.querySelector('.card-text').textContent.toLowerCase();
+              const location = card.querySelector('.info-item:nth-child(2)').textContent.toLowerCase();
+              
+              const matches = title.includes(searchTerm) || 
+                            description.includes(searchTerm) || 
+                            location.includes(searchTerm);
+              
+              card.closest('.col-lg-4').style.display = matches ? 'block' : 'none';
+          });
       });
-  });
 
-  // Filter Buttons
-  filterButtons.forEach(button => {
-      button.addEventListener('click', function() {
-          filterButtons.forEach(btn => btn.classList.remove('active'));
-          this.classList.add('active');
-          
-          const filter = this.textContent.trim();
-          const cardArray = Array.from(workshopCards);
-          
-          switch(filter) {
-              case 'Semua':
-                  workshopCards.forEach(card => {
-                      card.closest('.col-lg-4').style.display = 'block';
-                  });
-                  break;
+      // Filter Buttons
+      filterButtons.forEach(button => {
+          button.addEventListener('click', function() {
+              filterButtons.forEach(btn => btn.classList.remove('active'));
+              this.classList.add('active');
               
-              case 'Terbaru':
-                  // Sort by most recent workshops
-                  cardArray.sort((a, b) => {
-                      const dateA = new Date(a.querySelector('.info-item:first-child span').textContent);
-                      const dateB = new Date(b.querySelector('.info-item:first-child span').textContent);
-                      return dateB - dateA;
-                  });
-                  
-                  workshopCards.forEach(card => {
-                      card.closest('.col-lg-4').style.display = 'none';
-                  });
-                  
-                  cardArray.slice(0, 2).forEach(card => {
-                      card.closest('.col-lg-4').style.display = 'block';
-                  });
-                  break;
+              const filter = this.textContent.trim();
+              const cardArray = Array.from(workshopCards);
               
-              case 'Best Seller':
-                  // Sort by rating and number of participants
-                  cardArray.sort((a, b) => {
-                      const participantsA = parseInt(a.querySelector('.participants-count').textContent.replace(/[^\d]/g, ''));
-                      const participantsB = parseInt(b.querySelector('.participants-count').textContent.replace(/[^\d]/g, ''));
-                      const ratingA = parseFloat(a.querySelector('.rating-wrapper .text-muted').textContent);
-                      const ratingB = parseFloat(b.querySelector('.rating-wrapper .text-muted').textContent);
+              switch(filter) {
+                  case 'Semua':
+                      workshopCards.forEach(card => {
+                          card.closest('.col-lg-4').style.display = 'block';
+                      });
+                      break;
                       
-                      // First, sort by number of participants (more participants is better)
-                      if (participantsB !== participantsA) {
-                          return participantsB - participantsA;
-                      }
-                      // Then, sort by rating (higher rating is better)
-                      return ratingB - ratingA;
-                  });
-
-                  workshopCards.forEach(card => {
-                      card.closest('.col-lg-4').style.display = 'none';
-                  });
-
-                  cardArray.slice(0, 3).forEach(card => {
-                      card.closest('.col-lg-4').style.display = 'block';
-                  });
-                  break;
-          }
+                  case 'Terbaru':
+                      // Sort by most recent workshops
+                      cardArray.sort((a, b) => {
+                          const dateA = new Date(a.querySelector('.info-item:first-child span').textContent);
+                          const dateB = new Date(b.querySelector('.info-item:first-child span').textContent);
+                          return dateB - dateA;
+                      });
+                      
+                      workshopCards.forEach(card => {
+                          card.closest('.col-lg-4').style.display = 'none';
+                      });
+                      
+                      cardArray.slice(0, 2).forEach(card => {
+                          card.closest('.col-lg-4').style.display = 'block';
+                      });
+                      break;
+                      
+                  case 'Best Seller':
+                      // Show random selection for now
+                      workshopCards.forEach(card => {
+                          card.closest('.col-lg-4').style.display = Math.random() > 0.5 ? 'block' : 'none';
+                      });
+                      break;
+              }
+          });
       });
   });
-});
-
   </script>
 </body>
 
