@@ -87,12 +87,12 @@
           </a>
         </li> -->
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link collapsed" href="pesan.php">
             <i class="bi bi-envelope"></i>
             <span>Pesan</span>
           </a>
-        </li>
+        </li> -->
 
       <?php elseif($_SESSION['role'] == 'user'): ?>
         <!-- Menu untuk peserta -->
